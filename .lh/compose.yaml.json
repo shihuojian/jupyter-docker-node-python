@@ -1,0 +1,126 @@
+{
+    "sourceFile": "compose.yaml",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 27,
+            "patches": [
+                {
+                    "date": 1697383447638,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1697383619105,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n         reservations:\n           devices:\n             - driver: nvidia\n               count: 1\n-              capabilities: [gpu, utility,nvidia-compute]\n+              capabilities: [nvidia-compute]\n"
+                },
+                {
+                    "date": 1697383630842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n         reservations:\n           devices:\n             - driver: nvidia\n               count: 1\n-              capabilities: [nvidia-compute]\n+              capabilities: [gpu,nvidia-compute]\n"
+                },
+                {
+                    "date": 1697383778145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n         reservations:\n           devices:\n             - driver: nvidia\n               count: 1\n-              capabilities: [gpu,nvidia-compute]\n+              capabilities: [\"nvidia-compute\",\"GPU\"]\n"
+                },
+                {
+                    "date": 1697383819185,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n         reservations:\n           devices:\n             - driver: nvidia\n               count: 1\n-              capabilities: [\"nvidia-compute\",\"GPU\"]\n+              capabilities: [\"nvidia-compute\",\"gpu\"]\n"
+                },
+                {
+                    "date": 1697383913186,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n         reservations:\n           devices:\n             - driver: nvidia\n               count: 1\n-              capabilities: [\"nvidia-compute\",\"gpu\"]\n+              capabilities: [\"nvidia-compute\"]\n"
+                },
+                {
+                    "date": 1697383974665,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n         reservations:\n           devices:\n             - driver: nvidia\n               count: 1\n-              capabilities: [\"nvidia-compute\"]\n+              capabilities: [nvidia-compute]\n"
+                },
+                {
+                    "date": 1697384036294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,7 +9,6 @@\n     deploy:\n       resources:\n         reservations:\n           devices:\n-            - driver: nvidia\n-              count: 1\n-              capabilities: [nvidia-compute]\n+            - capabilities: [\"nvidia-compute\"]\n+              driver: nvidia\n"
+                },
+                {
+                    "date": 1697384143813,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,6 +9,7 @@\n     deploy:\n       resources:\n         reservations:\n           devices:\n-            - capabilities: [\"nvidia-compute\"]\n-              driver: nvidia\n+            - driver: nvidia\n+              count: 1\n+              capabilities: [gpu,nvidia-compute]\n"
+                },
+                {
+                    "date": 1697384151573,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n         reservations:\n           devices:\n             - driver: nvidia\n               count: 1\n-              capabilities: [gpu,nvidia-compute]\n+              capabilities: [gpu]\n"
+                },
+                {
+                    "date": 1697384568315,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,5 @@\n         reservations:\n           devices:\n             - driver: nvidia\n               count: 1\n-              capabilities: [gpu]\n+              capabilities: [gpu,utility,compute]\n"
+                },
+                {
+                    "date": 1697420898357,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n     ports:\n       - \"8888:8888\"\n     volumes:\n       - .:/app\n+    runtime:nvidia  \n     deploy:\n       resources:\n         reservations:\n           devices:\n"
+                },
+                {
+                    "date": 1697421125130,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n     ports:\n       - \"8888:8888\"\n     volumes:\n       - .:/app\n-    runtime:nvidia  \n+    runtime: nvidia\n     deploy:\n       resources:\n         reservations:\n           devices:\n"
+                },
+                {
+                    "date": 1697446954278,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,4 +13,7 @@\n           devices:\n             - driver: nvidia\n               count: 1\n               capabilities: [gpu,utility,compute]\n+  tensorflow-gpu:\n+    image: tensorflow/tensorflow:latest-gpu  \n+    command: python -c \"import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))\"          \n"
+                },
+                {
+                    "date": 1697447011680,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n       resources:\n         reservations:\n           devices:\n             - driver: nvidia\n-              count: 1\n-              capabilities: [gpu,utility,compute]\n+              count: all\n+              capabilities: [gpu]\n   tensorflow-gpu:\n     image: tensorflow/tensorflow:latest-gpu  \n     command: python -c \"import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))\"          \n"
+                },
+                {
+                    "date": 1697447023808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,5 +15,12 @@\n               count: all\n               capabilities: [gpu]\n   tensorflow-gpu:\n     image: tensorflow/tensorflow:latest-gpu  \n-    command: python -c \"import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))\"          \n+    command: python -c \"import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))\"     \n+    deploy:\n+      resources:\n+        reservations:\n+          devices:\n+            - driver: nvidia\n+              count: all\n+              capabilities: [gpu]     \n"
+                },
+                {
+                    "date": 1697447052101,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n               capabilities: [gpu]\n   tensorflow-gpu:\n     image: tensorflow/tensorflow:latest-gpu  \n     command: python -c \"import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))\"     \n+    runtime: nvidia\n     deploy:\n       resources:\n         reservations:\n           devices:\n"
+                },
+                {
+                    "date": 1697447117249,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n       resources:\n         reservations:\n           devices:\n             - driver: nvidia\n-              count: all\n+              count: 1\n               capabilities: [gpu]\n   tensorflow-gpu:\n     image: tensorflow/tensorflow:latest-gpu  \n     command: python -c \"import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))\"     \n@@ -22,6 +22,6 @@\n       resources:\n         reservations:\n           devices:\n             - driver: nvidia\n-              count: all\n+              count: 1\n               capabilities: [gpu]     \n"
+                },
+                {
+                    "date": 1697447378519,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,16 +12,5 @@\n         reservations:\n           devices:\n             - driver: nvidia\n               count: 1\n-              capabilities: [gpu]\n-  tensorflow-gpu:\n-    image: tensorflow/tensorflow:latest-gpu  \n-    command: python -c \"import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))\"     \n-    runtime: nvidia\n-    deploy:\n-      resources:\n-        reservations:\n-          devices:\n-            - driver: nvidia\n-              count: 1\n-              capabilities: [gpu]     \n+              capabilities: [gpu]    \n"
+                },
+                {
+                    "date": 1697449570058,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n     ports:\n       - \"8888:8888\"\n     volumes:\n       - .:/app\n+      - /app/node_modules\n     runtime: nvidia\n     deploy:\n       resources:\n         reservations:\n"
+                },
+                {
+                    "date": 1697453815120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,9 @@\n     volumes:\n       - .:/app\n       - /app/node_modules\n     runtime: nvidia\n+    command: python3\n     deploy:\n       resources:\n         reservations:\n           devices:\n"
+                },
+                {
+                    "date": 1697454483593,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,8 @@\n     volumes:\n       - .:/app\n       - /app/node_modules\n     runtime: nvidia\n-    command: python3\n     deploy:\n       resources:\n         reservations:\n           devices:\n"
+                },
+                {
+                    "date": 1697470543607,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n       - \"8888:8888\"\n     volumes:\n       - .:/app\n       - /app/node_modules\n-    runtime: nvidia\n+    # runtime: nvidia\n     deploy:\n       resources:\n         reservations:\n           devices:\n"
+                },
+                {
+                    "date": 1697508561617,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,8 @@\n       - \"8888:8888\"\n     volumes:\n       - .:/app\n       - /app/node_modules\n-    # runtime: nvidia\n     deploy:\n       resources:\n         reservations:\n           devices:\n"
+                },
+                {
+                    "date": 1697510304371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,11 +3,11 @@\n   web:\n     build: .\n     ports:\n       - \"8888:8888\"\n-    volumes:\n-      - .:/app\n-      - /app/node_modules\n+    # volumes:\n+    #   - .:/app\n+    #   - /app/node_modules\n     deploy:\n       resources:\n         reservations:\n           devices:\n"
+                },
+                {
+                    "date": 1697510493749,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,8 +6,11 @@\n       - \"8888:8888\"\n     # volumes:\n     #   - .:/app\n     #   - /app/node_modules\n+    volumes:\n+      - ./weights:/app/assets/weights\n+      - ./opt:/app/opt\n     deploy:\n       resources:\n         reservations:\n           devices:\n"
+                },
+                {
+                    "date": 1697512001018,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,8 @@\n     # volumes:\n     #   - .:/app\n     #   - /app/node_modules\n     volumes:\n-      - ./weights:/app/assets/weights\n       - ./opt:/app/opt\n     deploy:\n       resources:\n         reservations:\n"
+                },
+                {
+                    "date": 1697512654190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,11 +3,8 @@\n   web:\n     build: .\n     ports:\n       - \"8888:8888\"\n-    # volumes:\n-    #   - .:/app\n-    #   - /app/node_modules\n     volumes:\n       - ./opt:/app/opt\n     deploy:\n       resources:\n"
+                }
+            ],
+            "date": 1697383447638,
+            "name": "Commit-0",
+            "content": "\nservices:\n  web:\n    build: .\n    ports:\n      - \"8888:8888\"\n    volumes:\n      - .:/app\n    deploy:\n      resources:\n        reservations:\n          devices:\n            - driver: nvidia\n              count: 1\n              capabilities: [gpu, utility,nvidia-compute]\n"
+        }
+    ]
+}

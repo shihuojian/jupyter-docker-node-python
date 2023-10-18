@@ -1,0 +1,182 @@
+{
+    "sourceFile": "Dockerfile",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 41,
+            "patches": [
+                {
+                    "date": 1697384337254,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1697384483582,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,12 +3,8 @@\n FROM tensorflow/tensorflow:latest\n \n WORKDIR /app\n \n-ENV NVIDIA_VISIBLE_DEVICES all\n-\n-ENV NVIDIA_DRIVER_CAPABILITIES compute,utility\n-\n COPY requirements.txt requirements.txt\n \n RUN pip install -r requirements.txt\n \n"
+                },
+                {
+                    "date": 1697384602125,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,4 +10,7 @@\n \n EXPOSE 8888\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n+\n+# 执行这段试一下\n+# docker run -itd --gpus all --name test-1 -e NVIDIA_DRIVER_CAPABILITIES=compute,utility -e NVIDIA_VISIBLE_DEVICES=all test\n"
+                },
+                {
+                    "date": 1697385317251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,5 @@\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n \n # 执行这段试一下\n-# docker run -itd --gpus all --name test-1 -e NVIDIA_DRIVER_CAPABILITIES=compute,utility -e NVIDIA_VISIBLE_DEVICES=all test\n+# docker run -itd --gpus all --name test-1 -e NVIDIA_DRIVER_CAPABILITIES=compute,utility -e NVIDIA_VISIBLE_DEVICES=all -p 8888:8888 jupyter-web\n"
+                },
+                {
+                    "date": 1697427294944,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n # syntax=docker/dockerfile:1\n \n-FROM tensorflow/tensorflow:latest\n+FROM tensorflow-notebook:ubuntu-20.04\n \n WORKDIR /app\n \n COPY requirements.txt requirements.txt\n"
+                },
+                {
+                    "date": 1697427570675,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n # syntax=docker/dockerfile:1\n \n-FROM tensorflow-notebook:ubuntu-20.04\n+FROM jupyter/tensorflow-notebook:latest\n \n WORKDIR /app\n \n COPY requirements.txt requirements.txt\n@@ -9,8 +9,8 @@\n RUN pip install -r requirements.txt\n \n EXPOSE 8888\n \n-CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n+# CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n \n # 执行这段试一下\n # docker run -itd --gpus all --name test-1 -e NVIDIA_DRIVER_CAPABILITIES=compute,utility -e NVIDIA_VISIBLE_DEVICES=all -p 8888:8888 jupyter-web\n"
+                },
+                {
+                    "date": 1697427805515,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n # syntax=docker/dockerfile:1\n \n-FROM jupyter/tensorflow-notebook:latest\n+FROM tensorflow/tensorflow:latest\n \n WORKDIR /app\n \n COPY requirements.txt requirements.txt\n"
+                },
+                {
+                    "date": 1697427860546,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,8 @@\n RUN pip install -r requirements.txt\n \n EXPOSE 8888\n \n-# CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n+CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n \n # 执行这段试一下\n # docker run -itd --gpus all --name test-1 -e NVIDIA_DRIVER_CAPABILITIES=compute,utility -e NVIDIA_VISIBLE_DEVICES=all -p 8888:8888 jupyter-web\n"
+                },
+                {
+                    "date": 1697427866615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,4 @@\n EXPOSE 8888\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n \n-# 执行这段试一下\n-# docker run -itd --gpus all --name test-1 -e NVIDIA_DRIVER_CAPABILITIES=compute,utility -e NVIDIA_VISIBLE_DEVICES=all -p 8888:8888 jupyter-web\n"
+                },
+                {
+                    "date": 1697429098661,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n # syntax=docker/dockerfile:1\n \n-FROM tensorflow/tensorflow:latest\n+FROM tensorflow/tensorflow:latest-gpu\n \n WORKDIR /app\n \n COPY requirements.txt requirements.txt\n"
+                },
+                {
+                    "date": 1697448179682,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n # syntax=docker/dockerfile:1\n \n-FROM tensorflow/tensorflow:latest-gpu\n+FROM tensorflow/tensorflow:latest-gpu as stop\n \n WORKDIR /app\n \n COPY requirements.txt requirements.txt\n"
+                },
+                {
+                    "date": 1697448205122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n # syntax=docker/dockerfile:1\n \n-FROM tensorflow/tensorflow:latest-gpu as stop\n+FROM tensorflow/tensorflow:latest-gpu as stop1\n \n WORKDIR /app\n \n COPY requirements.txt requirements.txt\n@@ -11,4 +11,6 @@\n EXPOSE 8888\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n \n+FROM node:latest\n+\n"
+                },
+                {
+                    "date": 1697448215489,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,4 +13,6 @@\n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n \n FROM node:latest\n \n+WORKDIR /app\n+\n"
+                },
+                {
+                    "date": 1697448231433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,9 @@\n RUN pip install -r requirements.txt\n \n EXPOSE 8888\n \n-CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n-\n FROM node:latest\n \n WORKDIR /app\n \n+CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697448350075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n # syntax=docker/dockerfile:1\n \n-FROM tensorflow/tensorflow:latest-gpu as stop1\n+FROM tensorflow/tensorflow:latest-gpu\n \n WORKDIR /app\n \n COPY requirements.txt requirements.txt\n@@ -13,5 +13,7 @@\n FROM node:latest\n \n WORKDIR /app\n \n+COPY --from=0 /app .\n+\n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697448361449,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,7 @@\n EXPOSE 8888\n \n FROM node:latest\n \n-WORKDIR /app\n-\n COPY --from=0 /app .\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697448398014,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n EXPOSE 8888\n \n FROM node:latest\n \n-COPY --from=0 /app .\n+COPY --from=0 /app app\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697448412118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n EXPOSE 8888\n \n FROM node:latest\n \n-COPY --from=0 /app app\n+COPY --from=0 /app /app\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697448461005,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n # syntax=docker/dockerfile:1\n \n FROM tensorflow/tensorflow:latest-gpu\n \n-WORKDIR /app\n+WORKDIR /gpu\n \n COPY requirements.txt requirements.txt\n \n RUN pip install -r requirements.txt\n@@ -11,7 +11,9 @@\n EXPOSE 8888\n \n FROM node:latest\n \n-COPY --from=0 /app /app\n+WORKDIR /app\n \n+COPY --from=0 /gpu /app/\n+\n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697449247405,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,7 +13,7 @@\n FROM node:latest\n \n WORKDIR /app\n \n-COPY --from=0 /gpu /app/\n+COPY --from=0 /gpu /app\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697449360868,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n FROM tensorflow/tensorflow:latest-gpu\n \n WORKDIR /gpu\n \n-COPY requirements.txt requirements.txt\n+COPY . .\n \n RUN pip install -r requirements.txt\n \n EXPOSE 8888\n"
+                },
+                {
+                    "date": 1697449400722,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,7 +13,7 @@\n FROM node:latest\n \n WORKDIR /app\n \n-COPY --from=0 /gpu /app\n+COPY --from=0 /gpu /app/\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697449797930,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,13 +7,11 @@\n COPY . .\n \n RUN pip install -r requirements.txt\n \n-EXPOSE 8888\n-\n FROM node:latest\n \n WORKDIR /app\n \n-COPY --from=0 /gpu /app/\n+COPY --from=0 . .\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697450114873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n # syntax=docker/dockerfile:1\n \n FROM tensorflow/tensorflow:latest-gpu\n \n-WORKDIR /gpu\n+WORKDIR /app\n \n COPY . .\n \n RUN pip install -r requirements.txt\n@@ -13,5 +13,7 @@\n WORKDIR /app\n \n COPY --from=0 . .\n \n+EXPOSE 8888\n+\n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697450383690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,15 +5,20 @@\n WORKDIR /app\n \n COPY . .\n \n+EXPOSE 8888\n+\n+#安装依赖\n RUN pip install -r requirements.txt\n \n-FROM node:latest\n+#安装node\n+RUN apt-get update\n+RUN apt-get install -y ca-certificates curl gnupg\n+RUN mkdir -p /etc/apt/keyrings\n+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg\n+RUN echo \"deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main\" | tee /etc/apt/sources.list.d/nodesource.list\n+RUN apt-get update\n+RUN apt-get install nodejs -y\n+RUN npm install && npm install -g nodemon\n \n-WORKDIR /app\n-\n-COPY --from=0 . .\n-\n-EXPOSE 8888\n-\n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697450389843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,7 @@\n RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg\n RUN echo \"deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main\" | tee /etc/apt/sources.list.d/nodesource.list\n RUN apt-get update\n RUN apt-get install nodejs -y\n-RUN npm install && npm install -g nodemon\n+# RUN npm install && npm install -g nodemon\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697450461230,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,5 +20,7 @@\n RUN apt-get update\n RUN apt-get install nodejs -y\n # RUN npm install && npm install -g nodemon\n \n+VOLUME [ \"/app/assets/weights\", \"/app/opt\" ]\n+\n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697453800638,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,17 +10,6 @@\n \n #安装依赖\n RUN pip install -r requirements.txt\n \n-#安装node\n-RUN apt-get update\n-RUN apt-get install -y ca-certificates curl gnupg\n-RUN mkdir -p /etc/apt/keyrings\n-RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg\n-RUN echo \"deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main\" | tee /etc/apt/sources.list.d/nodesource.list\n-RUN apt-get update\n-RUN apt-get install nodejs -y\n-# RUN npm install && npm install -g nodemon\n \n-VOLUME [ \"/app/assets/weights\", \"/app/opt\" ]\n-\n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697470477306,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n # syntax=docker/dockerfile:1\n \n-FROM tensorflow/tensorflow:latest-gpu\n+FROM nikolaik/python-nodejs:python3.10-nodejs18\n \n WORKDIR /app\n \n COPY . .\n"
+                },
+                {
+                    "date": 1697510265991,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,7 @@\n \n #安装依赖\n RUN pip install -r requirements.txt\n \n+VOLUME [ \"/app/weights\", \"/app/opt\" ]\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697510398129,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n # syntax=docker/dockerfile:1\n \n-FROM nikolaik/python-nodejs:python3.10-nodejs18\n+FROM node:latest\n \n WORKDIR /app\n \n COPY . .\n"
+                },
+                {
+                    "date": 1697510833606,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n # syntax=docker/dockerfile:1\n \n-FROM node:latest\n+FROM nikolaik/python-nodejs:python3.10-nodejs18\n \n WORKDIR /app\n \n COPY . .\n"
+                },
+                {
+                    "date": 1697511462650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,7 +10,7 @@\n \n #安装依赖\n RUN pip install -r requirements.txt\n \n-VOLUME [ \"/app/weights\", \"/app/opt\" ]\n+VOLUME [ \"/app/assets/weights\", \"/app/opt\" ]\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697511497581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n EXPOSE 8888\n \n #安装依赖\n-RUN pip install -r requirements.txt\n+RUN pip3 install -r requirements.txt\n \n VOLUME [ \"/app/assets/weights\", \"/app/opt\" ]\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697512002503,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,7 +10,7 @@\n \n #安装依赖\n RUN pip3 install -r requirements.txt\n \n-VOLUME [ \"/app/assets/weights\", \"/app/opt\" ]\n+VOLUME [\"/app/opt\" ]\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697521184921,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n EXPOSE 8888\n \n #安装依赖\n RUN pip3 install -r requirements.txt\n+RUN npm install -g nodemon\n \n VOLUME [\"/app/opt\" ]\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697521391489,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n EXPOSE 8888\n \n #安装依赖\n RUN pip3 install -r requirements.txt\n-RUN npm install -g nodemon\n+RUN npm install && npm install -g nodemon\n \n VOLUME [\"/app/opt\" ]\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697522111906,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,7 @@\n RUN npm install && npm install -g nodemon\n \n VOLUME [\"/app/opt\" ]\n \n-CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n+CMD [\"nodemon\",\"-L\", \"server.js\"]\n+\n+# CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697523241741,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,11 +9,9 @@\n EXPOSE 8888\n \n #安装依赖\n RUN pip3 install -r requirements.txt\n-RUN npm install && npm install -g nodemon\n \n+\n VOLUME [\"/app/opt\" ]\n \n-CMD [\"nodemon\",\"-L\", \"server.js\"]\n-\n-# CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n+CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697523250128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,7 @@\n \n #安装依赖\n RUN pip3 install -r requirements.txt\n \n-\n VOLUME [\"/app/opt\" ]\n \n CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697536388181,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,5 @@\n RUN pip3 install -r requirements.txt\n \n VOLUME [\"/app/opt\" ]\n \n-CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n+CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\",\"--port=3000\", \"--allow-root\", \"--no-browser\"]\n"
+                },
+                {
+                    "date": 1697536848216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,5 @@\n RUN pip3 install -r requirements.txt\n \n VOLUME [\"/app/opt\" ]\n \n-CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\",\"--port=3000\", \"--allow-root\", \"--no-browser\"]\n+CMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\",\"--port=8888\", \"--allow-root\", \"--no-browser\"]\n"
+                }
+            ],
+            "date": 1697384337254,
+            "name": "Commit-0",
+            "content": "# syntax=docker/dockerfile:1\n\nFROM tensorflow/tensorflow:latest\n\nWORKDIR /app\n\nENV NVIDIA_VISIBLE_DEVICES all\n\nENV NVIDIA_DRIVER_CAPABILITIES compute,utility\n\nCOPY requirements.txt requirements.txt\n\nRUN pip install -r requirements.txt\n\nEXPOSE 8888\n\nCMD [\"jupyter\", \"lab\", \"--ip=0.0.0.0\", \"--allow-root\", \"--no-browser\"]\n"
+        }
+    ]
+}

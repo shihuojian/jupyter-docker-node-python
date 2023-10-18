@@ -1,0 +1,38 @@
+{
+    "sourceFile": "server.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1697521400927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1697522881698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,16 +3,27 @@\n const Hapi = require('@hapi/hapi');\n const util = require('node:util');\n const child_process = require(\"node:child_process\");\n const exec = util.promisify(child_process.exec);\n-\n+const Path = require('path');\n+ await server.register(require('@hapi/vision'));\n const init = async () => {\n \n     const server = Hapi.server({\n         port: 3000,\n         host: '0.0.0.0'\n     });\n \n+    await server.register(require('@hapi/vision'));\n+    \n+    server.views({\n+        engines: {\n+            html: require('handlebars')\n+        },\n+        relativeTo: __dirname,\n+        path: 'templates'\n+    });\n+    \n     server.route({\n         method: 'GET',\n         path: '/',\n         handler: async (request, h) => {\n"
+                },
+                {
+                    "date": 1697522907799,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,17 +21,10 @@\n         },\n         relativeTo: __dirname,\n         path: 'templates'\n     });\n-    \n-    server.route({\n-        method: 'GET',\n-        path: '/',\n-        handler: async (request, h) => {\n-            return await exec('node -v')\n-        }\n-    });\n \n+\n     await server.start();\n     console.log('Server running on %s', server.info.uri);\n };\n \n"
+                },
+                {
+                    "date": 1697522942987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,8 @@\n const util = require('node:util');\n const child_process = require(\"node:child_process\");\n const exec = util.promisify(child_process.exec);\n const Path = require('path');\n- await server.register(require('@hapi/vision'));\n const init = async () => {\n \n     const server = Hapi.server({\n         port: 3000,\n"
+                },
+                {
+                    "date": 1697523028036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,36 @@\n+'use strict';\n+\n+const Hapi = require('@hapi/hapi');\n+const util = require('node:util');\n+const child_process = require(\"node:child_process\");\n+const exec = util.promisify(child_process.exec);\n+const Path = require('path');\n+const init = async () => {\n+\n+    const server = Hapi.server({\n+        port: 3000,\n+        host: '0.0.0.0'\n+    });\n+\n+    await server.register(require('@hapi/vision'));\n+    \n+    server.views({\n+        engines: {\n+            html: require('handlebars')\n+        },\n+        relativeTo: __dirname,\n+        path: 'templates'\n+    });\n+\n+\n+    await server.start();\n+    console.log('Server running on %s', server.info.uri);\n+};\n+\n+process.on('unhandledRejection', (err) => {\n+\n+    console.log(err);\n+    process.exit(1);\n+});\n+\n+init();\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1697523043814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n const Path = require('path');\n const init = async () => {\n \n     const server = Hapi.server({\n-        port: 3000,\n+        port: 8888,\n         host: '0.0.0.0'\n     });\n \n     await server.register(require('@hapi/vision'));\n@@ -32,41 +32,5 @@\n     console.log(err);\n     process.exit(1);\n });\n \n-init();\n-'use strict';\n-\n-const Hapi = require('@hapi/hapi');\n-const util = require('node:util');\n-const child_process = require(\"node:child_process\");\n-const exec = util.promisify(child_process.exec);\n-const Path = require('path');\n-const init = async () => {\n-\n-    const server = Hapi.server({\n-        port: 3000,\n-        host: '0.0.0.0'\n-    });\n-\n-    await server.register(require('@hapi/vision'));\n-    \n-    server.views({\n-        engines: {\n-            html: require('handlebars')\n-        },\n-        relativeTo: __dirname,\n-        path: 'templates'\n-    });\n-\n-\n-    await server.start();\n-    console.log('Server running on %s', server.info.uri);\n-};\n-\n-process.on('unhandledRejection', (err) => {\n-\n-    console.log(err);\n-    process.exit(1);\n-});\n-\n init();\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1697521400927,
+            "name": "Commit-0",
+            "content": "'use strict';\n\nconst Hapi = require('@hapi/hapi');\nconst util = require('node:util');\nconst child_process = require(\"node:child_process\");\nconst exec = util.promisify(child_process.exec);\n\nconst init = async () => {\n\n    const server = Hapi.server({\n        port: 3000,\n        host: '0.0.0.0'\n    });\n\n    server.route({\n        method: 'GET',\n        path: '/',\n        handler: async (request, h) => {\n            return await exec('node -v')\n        }\n    });\n\n    await server.start();\n    console.log('Server running on %s', server.info.uri);\n};\n\nprocess.on('unhandledRejection', (err) => {\n\n    console.log(err);\n    process.exit(1);\n});\n\ninit();"
+        }
+    ]
+}
